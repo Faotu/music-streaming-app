@@ -1,7 +1,7 @@
 import { metadata } from "./app/layout";
 import Stripe from "stripe";
 
-export interface UserDetials {
+export interface UserDetails {
   id: string;
   first_name: string;
   last_name: string;
@@ -41,7 +41,7 @@ export interface Subscription {
   status?: Stripe.Subscription.Status;
   metadata?: Stripe.Metadata;
   price_id?: string;
-  quantity?: string;
+  quantity?: number;
   cancel_at_perido_end?: boolean;
   created: string;
   current_period_start: string;
