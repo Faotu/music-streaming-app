@@ -44,13 +44,41 @@ const UploadModal = () => {
       }
       const uniqueID = uniquid();
 
-      // push code to database
+      // push song to database
 
       const { data: songData, error: songError } = await supabaseClient.storage
         .from("songs")
         .upload(`song-${values.title}-${uniqueID}`, songFile, {
           cacheControl: "3600",
           upsert: false,
+        });
+
+      if (songError) {
+        setIsloading(false);
+        return toast.error("Failed to upload Song!!");
+      }
+
+      // push image to database
+
+      const { data: imageData, error: imageError } =
+        await supabaseClient.storage
+          .from("images")
+          .upload(`image-${values.title}-${uniqueID}`, imageFile, {
+            cacheControl: "3600",
+            upsert: false,
+          });
+
+      if (imageError) {
+        setIsloading(false);
+        return toast.error("Failed to upload Image!!");
+      }
+
+      const { error: supabaseError } = await supabaseClient
+        .from("songs")
+        .insert({
+          user_id: user.id,
+          title: values.title,
+          author: values.author,
         });
     } catch (error) {
       toast.error("It was unsuccessful!!");
