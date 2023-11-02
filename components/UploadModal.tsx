@@ -5,6 +5,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useUser } from "@/hooks/useUser";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Modal from "./Modal";
 import useUploadModal from "@/hooks/useUploadModal";
 import Input from "./Input";
@@ -16,6 +17,7 @@ const UploadModal = () => {
   const uploadModal = useUploadModal();
   const { user } = useUser();
   const supabaseClient = useSupabaseClient();
+  const router = useRouter();
 
   const { register, handleSubmit, reset } = useForm<FieldValues>({
     defaultValues: {
@@ -72,14 +74,27 @@ const UploadModal = () => {
         setIsloading(false);
         return toast.error("Failed to upload Image!!");
       }
-
+      // Inserting Songs to the table
       const { error: supabaseError } = await supabaseClient
         .from("songs")
         .insert({
           user_id: user.id,
           title: values.title,
           author: values.author,
+          image_path: imageData.path,
+          song_path: songData.path,
         });
+
+      if (supabaseError) {
+        setIsloading(false);
+        return toast.error(supabaseError.message);
+      }
+
+      router.refresh();
+      setIsloading(false);
+      toast.success("A new song was created!!");
+      reset();
+      uploadModal.onClose();
     } catch (error) {
       toast.error("It was unsuccessful!!");
     } finally {
