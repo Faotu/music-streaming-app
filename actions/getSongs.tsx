@@ -10,7 +10,7 @@ const getSongs = async (): Promise<Song[]> => {
   const { data, error } = await supabase
     .from("songs")
     .select("*")
-    .order("create_at", { ascending: false });
+    .order("created_at", { ascending: false });
 
   if (error) {
     console.log(error);
@@ -18,3 +18,5 @@ const getSongs = async (): Promise<Song[]> => {
 
   return (data as any) || [];
 };
+
+export default getSongs;
