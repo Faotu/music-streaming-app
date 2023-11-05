@@ -22,7 +22,7 @@ const SongList: React.FC<SongListProps> = ({ data, onClick }) => {
       <div className="relative aspect-square w-full h-full rounded-md overflow:hidden ">
         <Image
           className="object-cover"
-          src={imagePath || "/images/likedImage.png"}
+          src={imagePath || "/images/liked.png"}
           fill
           alt="Image"
         />
