@@ -15,7 +15,7 @@ import toast from "react-hot-toast";
 
 interface HeaderProps {
   children: React.ReactNode;
-  className: string;
+  className?: string;
 }
 
 const Header: React.FC<HeaderProps> = ({ children, className }) => {
@@ -156,7 +156,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
           {user ? (
             <div
               className="
-            flex 
+            flex
             gap-x-4
             items-center
             "
