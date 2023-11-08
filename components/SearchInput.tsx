@@ -28,7 +28,6 @@ const SearchInput = () => {
       placeholder="Search for your interested areas"
       value={value}
       onChange={(e) => setValue(e.target.value)}
-      className=""
     />
   );
 };

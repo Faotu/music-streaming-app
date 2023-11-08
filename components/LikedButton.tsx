@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import useAuthModal from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useSessionContext } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
 
@@ -34,9 +35,23 @@ const LikedButton: React.FC<LikedButtonProps> = ({ songId }) => {
         setIsLiked(true);
       }
     };
-  }, []);
 
-  return <div>Liked Button</div>;
+    fetchData();
+  }, [songId, supabaseClient, user?.id]);
+
+  const Icon = isLiked ? AiFillHeart : AiOutlineHeart;
+
+  const handleLike = () => {
+    if (!user) {
+      return authModal.onOpen();
+    }
+  };
+
+  return (
+    <button onClick={handleLike} className="hover:opacity-75 transition">
+      <Icon color={isLiked ? "#22c55e" : "white"} size={25} />
+    </button>
+  );
 };
 
 export default LikedButton;
