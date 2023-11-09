@@ -1,5 +1,6 @@
 "use client";
 
+import LikedButton from "@/components/LikedButton";
 import MediaItem from "@/components/MediaItem";
 import { useUser } from "@/hooks/useUser";
 import { Song } from "@/types";
@@ -21,7 +22,7 @@ const LikedContent: React.FC<LikedContentProps> = ({ songs }) => {
 
   if (songs.length === 0) {
     return (
-      <div className="flex flex-col gap-y-4 w-full px-6 text-neutral-400">
+      <div className="flex flex-col gap-y-2 w-full px-6 text-neutral-400">
         No Liked Songs!
       </div>
     );
@@ -33,6 +34,8 @@ const LikedContent: React.FC<LikedContentProps> = ({ songs }) => {
           <div className="flex-1">
             <MediaItem onClick={() => {}} data={song} />
           </div>
+
+          <LikedButton songId={song.id} />
         </div>
       ))}
     </div>
