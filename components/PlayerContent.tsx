@@ -9,7 +9,7 @@ import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import { Song } from "@/types";
 import usePlayer from "@/hooks/usePlayer";
 
-import LikeButton from "./LikeButton";
+import LikedButton from "./LikedButton";
 import MediaItem from "./MediaItem";
 import Slider from "./Slider";
 
@@ -96,7 +96,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
       <div className="flex w-full justify-start">
         <div className="flex items-center gap-x-4">
           <MediaItem data={song} />
-          <LikeButton songId={song.id} />
+          <LikedButton songId={song.id} />
         </div>
       </div>
 
