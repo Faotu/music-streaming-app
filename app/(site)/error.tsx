@@ -5,7 +5,7 @@ import React from "react";
 
 const error = () => {
   return (
-    <Box className="h0full items-center justify-center">
+    <Box className="h-full items-center justify-center">
       <div className="text-neutral-400">There was an error</div>
     </Box>
   );
