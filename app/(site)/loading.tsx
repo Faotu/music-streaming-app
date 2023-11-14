@@ -1,8 +1,8 @@
 "use client";
 
 import Box from "@/components/Box";
-import React from "react";
 import { BounceLoader } from "react-spinners";
+import React from "react";
 
 const loading = () => {
   return (
