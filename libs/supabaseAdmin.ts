@@ -72,7 +72,7 @@ const createOrRetrieveCustomer = async ({
       .from("customers")
       .insert([{ id: uuid, stripe_customer_id: customer.id }]);
     if (supabaseError) throw supabaseError;
-    console.log(`New customer created and inserted for ${uuid}.`);
+    console.log(`New customer created and updated record ${uuid}.`);
     return customer.id;
   }
   return data.stripe_customer_id;
@@ -86,6 +86,7 @@ const copyBillingDetailsToCustomer = async (
   const customer = payment_method.customer as string;
   const { name, phone, address } = payment_method.billing_details;
   if (!name || !phone || !address) return;
+
   //@ts-ignore
   await stripe.customers.update(customer, { name, phone, address });
   const { error } = await supabaseAdmin
@@ -116,12 +117,14 @@ const manageSubscriptionStatusChange = async (
   const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
     expand: ["default_payment_method"],
   });
-  // Upsert the latest status of the subscription object.
+
+  // Update the latest status of the subscription object.
   const subscriptionData: Database["public"]["Tables"]["subscriptions"]["Insert"] =
     {
       id: subscription.id,
       user_id: uuid,
       metadata: subscription.metadata,
+
       // @ts-ignore
       status: subscription.status,
       price_id: subscription.items.data[0].price.id,
